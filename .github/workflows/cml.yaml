@@ -35,6 +35,7 @@ jobs:
       env:
         repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
+        python --version
         pip install -r requirements.txt
         python train.py
 
