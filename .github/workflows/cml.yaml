@@ -5,10 +5,6 @@ jobs:
   deploy-runner:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 0.14.3
-
       - uses: iterative/setup-cml@v1
       - uses: actions/checkout@v2
 
