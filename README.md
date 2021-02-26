@@ -16,7 +16,6 @@ In this example, `.github/workflows/cml.yaml` contains three environmental varia
 |  PERSONAL_ACCESS_TOKEN | You must create a personal access token with repository and workflow permissions. |
 | AWS_ACCESS_KEY_ID  | AWS credential for accessing S3 storage  | 
 | AWS_SECRET_ACCESS_KEY | AWS credential for accessing S3 storage |
-| AWS_SESSION_TOKEN | Optional AWS credential for accessing S3 storage (if MFA is enabled) |
 
 The `cml-runner` function currently works with AWS and Azure cloud service providers. For Azure, you'll want to substitute the `AWS` secrets for Azure's credential variables. 
 
