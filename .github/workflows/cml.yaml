@@ -1,12 +1,14 @@
-name: "Train model in the cloud"
+name: train-my-model
+
 on: [push]
 
 jobs:
   deploy-runner:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: iterative/setup-cml@v1
       - uses: actions/checkout@v2
+
+      - uses: iterative/setup-cml@v1
 
       - name: deploy
         shell: bash
@@ -20,13 +22,20 @@ jobs:
           --cloud-region us-west \
           --cloud-type=t2.micro \
           --labels=cml-runner
-  test_container:
+
+  run:
     needs: deploy-runner
     runs-on: [self-hosted,cml-runner]
-    container: docker://dvcorg/cml-py3
+    container: docker://dvcorg/cml
+
     steps:
     - uses: actions/checkout@v2
-    - name: "Train the model"
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.6'
+
+    - name: cml
       env:
         repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
