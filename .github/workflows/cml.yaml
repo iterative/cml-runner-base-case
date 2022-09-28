@@ -6,7 +6,9 @@ jobs:
   deploy-runner:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - uses: iterative/setup-cml@v1
 
@@ -17,7 +19,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          cml-runner \
+          cml runner launch \
           --cloud aws \
           --cloud-region us-west \
           --cloud-type=t2.micro \
@@ -45,5 +47,6 @@ jobs:
 
         echo "## Report from your EC2 Instance" > report.md
         cat metrics.txt >> report.md
-        cml-publish "confusion_matrix.png" --md >> report.md
-        cml-send-comment report.md
+        echo '![Confusion Matrix](confusion_matrix.png)' >> report.md
+
+        cml comment create --publish --pr report.md
